@@ -12,25 +12,25 @@ public class UsuarioGrupoId implements java.io.Serializable {
     private static final long serialVersionUID = -6029963588743448995L;
     @NotNull
     @Column(name = "id_usuario", nullable = false)
-    private Integer idUsuario;
+    private Long idUsuario;
 
     @NotNull
     @Column(name = "id_grupo", nullable = false)
-    private Integer idGrupo;
+    private Long idGrupo;
 
-    public Integer getIdUsuario() {
+    public Long getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(Integer idUsuario) {
+    public void setIdUsuario(Long idUsuario) {
         this.idUsuario = idUsuario;
     }
 
-    public Integer getIdGrupo() {
+    public Long getIdGrupo() {
         return idGrupo;
     }
 
-    public void setIdGrupo(Integer idGrupo) {
+    public void setIdGrupo(Long idGrupo) {
         this.idGrupo = idGrupo;
     }
 
