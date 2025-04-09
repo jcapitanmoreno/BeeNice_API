@@ -1,7 +1,6 @@
 package com.github.jcapitanmoreno.beenice_api.Services;
 
 import com.github.jcapitanmoreno.beenice_api.exceptions.RecordNotFoundException;
-import com.github.jcapitanmoreno.beenice_api.models.Grupo;
 import com.github.jcapitanmoreno.beenice_api.models.Usuario;
 import com.github.jcapitanmoreno.beenice_api.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class UsuarioService {
@@ -27,7 +25,7 @@ public class UsuarioService {
         }
     }
 
-    public Usuario getUsuarioById(Long id)  throws RecordNotFoundException {
+    public Usuario getUsuarioById(Long id) throws RecordNotFoundException {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         if (usuario.isPresent()) {
             return usuario.get();
@@ -53,7 +51,7 @@ public class UsuarioService {
             } else {
                 throw new RecordNotFoundException("No existe usuario para el id ", usuario.getId());
             }
-        }else {
+        } else {
             throw new RecordNotFoundException("No existe usuario para el id ", usuario.getId());
         }
     }

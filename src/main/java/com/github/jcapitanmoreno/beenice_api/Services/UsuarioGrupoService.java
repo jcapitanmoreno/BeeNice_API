@@ -19,7 +19,8 @@ public class UsuarioGrupoService {
 
     @Autowired
     private GrupoRepository grupoRepository;
-    // Agregar un usuario a un grupo
+
+
     public Grupo addUsuarioToGrupo(Long usuarioId, Long grupoId) throws RecordNotFoundException {
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
         Optional<Grupo> grupoOptional = grupoRepository.findById(grupoId);
@@ -40,7 +41,7 @@ public class UsuarioGrupoService {
         }
     }
 
-    // Eliminar un usuario de un grupo
+
     public Grupo removeUsuarioFromGrupo(Long usuarioId, Long grupoId) throws RecordNotFoundException {
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
         Optional<Grupo> grupoOptional = grupoRepository.findById(grupoId);
@@ -61,7 +62,7 @@ public class UsuarioGrupoService {
         }
     }
 
-    // Listar los grupos de un usuario
+
     public Set<Grupo> getGruposByUsuarioId(Long usuarioId) throws RecordNotFoundException {
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
         if (usuarioOptional.isPresent()) {
@@ -71,7 +72,7 @@ public class UsuarioGrupoService {
         }
     }
 
-    // Listar los usuarios de un grupo
+
     public Set<Usuario> getUsuariosByGrupoId(Long grupoId) throws RecordNotFoundException {
         Optional<Grupo> grupoOptional = grupoRepository.findById(grupoId);
         if (grupoOptional.isPresent()) {
@@ -81,5 +82,24 @@ public class UsuarioGrupoService {
         }
     }
 
+    public Grupo joinGrupoByCodigo(Long usuarioId, String codigoGrupo) throws RecordNotFoundException {
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
+        Optional<Grupo> grupoOptional = grupoRepository.findByCodigoGrupo(codigoGrupo);
+
+        if (usuarioOptional.isPresent() && grupoOptional.isPresent()) {
+            Usuario usuario = usuarioOptional.get();
+            Grupo grupo = grupoOptional.get();
+
+            grupo.getUsuarios().add(usuario);
+            usuario.getGrupos().add(grupo);
+
+            grupoRepository.save(grupo);
+            usuarioRepository.save(usuario);
+
+            return grupo;
+        } else {
+            throw new RecordNotFoundException("Usuario o grupo no encontrado", usuarioId);
+        }
+    }
 
 }

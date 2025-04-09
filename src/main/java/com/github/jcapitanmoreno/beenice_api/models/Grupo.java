@@ -14,8 +14,9 @@ public class Grupo {
     @Column(name = "id", nullable = false)
     private Long id;
 
+
     @Size(max = 50)
-    @Column(name = "codigo_grupo", length = 50)
+    @Column(name = "codigo_grupo", length = 50, unique = true)
     private String codigoGrupo;
 
     @Size(max = 255)
