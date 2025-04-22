@@ -80,4 +80,13 @@ public class GrupoService {
         }
     }
 
+    public String getCodigoGrupoById(Long grupoId) throws RecordNotFoundException {
+        Optional<Grupo> grupoOptional = grupoRepository.findById(grupoId);
+        if (grupoOptional.isPresent()) {
+            return grupoOptional.get().getCodigoGrupo();
+        } else {
+            throw new RecordNotFoundException("No se encontró un grupo con el ID proporcionado", grupoId);
+        }
+    }
+
 }

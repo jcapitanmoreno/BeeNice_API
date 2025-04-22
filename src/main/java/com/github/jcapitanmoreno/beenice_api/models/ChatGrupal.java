@@ -13,7 +13,7 @@ public class ChatGrupal {
     @Column(name = "id_mensaje", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_grupo")
     private Grupo idGrupo;

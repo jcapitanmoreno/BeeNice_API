@@ -1,10 +1,11 @@
 package com.github.jcapitanmoreno.beenice_api.repositories;
 
+import com.github.jcapitanmoreno.beenice_api.models.ChatGrupal;
 import com.github.jcapitanmoreno.beenice_api.models.NotaGrupal;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ChatGrupalRepository extends JpaRepository<NotaGrupal, Integer> {
+public interface ChatGrupalRepository extends JpaRepository<ChatGrupal, Long> {
 
 }
