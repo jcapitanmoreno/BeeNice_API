@@ -11,7 +11,7 @@ public class NotaGrupal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -26,11 +26,11 @@ public class NotaGrupal {
     @Column(name = "fecha_ultima_modificacion", length = 50)
     private String fechaUltimaModificacion;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

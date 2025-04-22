@@ -25,7 +25,7 @@ public class UsuarioService {
         }
     }
 
-    public Usuario getUsuarioById(Long id)  throws RecordNotFoundException {
+    public Usuario getUsuarioById(Long id) throws RecordNotFoundException {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         if (usuario.isPresent()) {
             return usuario.get();
@@ -38,4 +38,60 @@ public class UsuarioService {
         usuario = usuarioRepository.save(usuario);
         return usuario;
     }
+
+    public Usuario updateUsuario(Usuario usuario) throws RecordNotFoundException {
+        if (usuario.getId() == null) {
+            Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuario.getId());
+            if (usuarioOptional.isPresent()) {
+                Usuario usuarioExistente = usuarioOptional.get();
+                usuarioExistente.setNombre(usuario.getNombre());
+                usuarioExistente.setCorreoElectronico(usuario.getCorreoElectronico());
+                usuarioExistente.setContrasena(usuario.getContrasena());
+                return usuarioRepository.save(usuarioExistente);
+            } else {
+                throw new RecordNotFoundException("No existe usuario para el id ", usuario.getId());
+            }
+        } else {
+            throw new RecordNotFoundException("No existe usuario para el id ", usuario.getId());
+        }
+    }
+
+    public void deleteUsuario(Long id) throws RecordNotFoundException {
+        Optional<Usuario> usuario = usuarioRepository.findById(id);
+        if (usuario.isPresent()) {
+            usuarioRepository.deleteById(id);
+        } else {
+            throw new RecordNotFoundException("No existe usuario para el id ", id);
+        }
+    }
+
+    // Buscar usuarios por nombre
+    public List<Usuario> findUsuariosByNombre(String nombre) {
+        return usuarioRepository.findByNombreContainingIgnoreCase(nombre);
+    }
+
+    // Buscar usuario por correo electrónico
+    public Optional<Usuario> findUsuarioByCorreoElectronico(String correoElectronico) {
+        return usuarioRepository.findByCorreoElectronico(correoElectronico);
+    }
+
+    // Validar credenciales de usuario
+    public boolean validateUsuario(String correoElectronico, String contrasena) {
+        Optional<Usuario> usuario = usuarioRepository.findByCorreoElectronico(correoElectronico);
+        return usuario.isPresent() && usuario.get().getContrasena().equals(contrasena);
+    }
+
+    // Cambiar contraseña
+    public Usuario changePassword(Long id, String nuevaContrasena) throws RecordNotFoundException {
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
+        if (usuarioOptional.isPresent()) {
+            Usuario usuario = usuarioOptional.get();
+            usuario.setContrasena(nuevaContrasena);
+            return usuarioRepository.save(usuario);
+        } else {
+            throw new RecordNotFoundException("No existe usuario para el id ", id);
+        }
+    }
+
+
 }

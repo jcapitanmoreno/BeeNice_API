@@ -11,16 +11,13 @@ public class ChatGrupal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_mensaje", nullable = false)
-    private Integer id;
+    private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_grupo")
     private Grupo idGrupo;
 
-    @Size(max = 100)
-    @Column(name = "nombre_usuario", length = 100)
-    private String nombreUsuario;
 
     @Lob
     @Column(name = "mensaje")
@@ -30,11 +27,24 @@ public class ChatGrupal {
     @Column(name = "fecha_envio", length = 50)
     private String fechaEnvio;
 
-    public Integer getId() {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "id_usuario")
+    private Usuario idUsuario;
+
+    public Usuario getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Usuario idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -46,13 +56,6 @@ public class ChatGrupal {
         this.idGrupo = idGrupo;
     }
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
-    }
-
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
-    }
 
     public String getMensaje() {
         return mensaje;
