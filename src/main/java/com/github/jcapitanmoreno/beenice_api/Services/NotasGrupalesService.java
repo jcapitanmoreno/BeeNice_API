@@ -21,7 +21,7 @@ public class NotasGrupalesService {
     @Autowired
     private GrupoRepository grupoRepository;
 
-    // Crear o recuperar la nota grupal de un grupo
+
     public NotaGrupal createOrGetNotaGrupal(Long grupoId) throws RecordNotFoundException {
         Optional<Grupo> grupoOptional = grupoRepository.findById(grupoId);
         if (grupoOptional.isEmpty()) {
@@ -40,7 +40,7 @@ public class NotasGrupalesService {
                 });
     }
 
-    // Obtener la nota grupal de un grupo
+
     public NotaGrupal getNotaGrupalByGrupoId(Long grupoId) throws RecordNotFoundException {
         return notasGrupalesRepository.findAll().stream()
                 .filter(nota -> nota.getIdGrupo().getId().equals(grupoId))
@@ -48,14 +48,14 @@ public class NotasGrupalesService {
                 .orElseThrow(() -> new RecordNotFoundException("No se encontró una nota grupal para el grupo con ID proporcionado", grupoId));
     }
 
-    // Actualizar la nota grupal de un grupo
+
     public NotaGrupal updateNotaGrupal(Long grupoId, String nuevoTexto) throws RecordNotFoundException {
         NotaGrupal notaGrupal = getNotaGrupalByGrupoId(grupoId);
         notaGrupal.setTexto(nuevoTexto);
         return notasGrupalesRepository.save(notaGrupal);
     }
 
-    // Eliminar la nota grupal de un grupo
+
     public void deleteNotaGrupal(Long grupoId) throws RecordNotFoundException {
         NotaGrupal notaGrupal = getNotaGrupalByGrupoId(grupoId);
         notasGrupalesRepository.delete(notaGrupal);

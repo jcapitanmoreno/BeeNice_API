@@ -65,23 +65,23 @@ public class UsuarioService {
         }
     }
 
-    // Buscar usuarios por nombre
+
     public List<Usuario> findUsuariosByNombre(String nombre) {
         return usuarioRepository.findByNombreContainingIgnoreCase(nombre);
     }
 
-    // Buscar usuario por correo electrónico
+
     public Optional<Usuario> findUsuarioByCorreoElectronico(String correoElectronico) {
         return usuarioRepository.findByCorreoElectronico(correoElectronico);
     }
 
-    // Validar credenciales de usuario
+
     public boolean validateUsuario(String correoElectronico, String contrasena) {
         Optional<Usuario> usuario = usuarioRepository.findByCorreoElectronico(correoElectronico);
         return usuario.isPresent() && usuario.get().getContrasena().equals(contrasena);
     }
 
-    // Cambiar contraseña
+
     public Usuario changePassword(Long id, String nuevaContrasena) throws RecordNotFoundException {
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
         if (usuarioOptional.isPresent()) {
