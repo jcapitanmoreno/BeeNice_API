@@ -1,7 +1,7 @@
 package com.github.jcapitanmoreno.beenice_api.utils;
 
 
-import com.github.jcapitanmoreno.beenice_api.Services.ChatGrupalService;
+import com.github.jcapitanmoreno.beenice_api.services.ChatGrupalService;
 import com.github.jcapitanmoreno.beenice_api.exceptions.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
