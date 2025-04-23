@@ -1,6 +1,6 @@
 package com.github.jcapitanmoreno.beenice_api.controllers;
 
-import com.github.jcapitanmoreno.beenice_api.Services.UsuarioService;
+import com.github.jcapitanmoreno.beenice_api.services.UsuarioService;
 import com.github.jcapitanmoreno.beenice_api.exceptions.RecordNotFoundException;
 import com.github.jcapitanmoreno.beenice_api.models.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;

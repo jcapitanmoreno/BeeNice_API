@@ -1,4 +1,4 @@
-package com.github.jcapitanmoreno.beenice_api.Services;
+package com.github.jcapitanmoreno.beenice_api.services;
 
 import com.github.jcapitanmoreno.beenice_api.exceptions.RecordNotFoundException;
 import com.github.jcapitanmoreno.beenice_api.models.Grupo;
