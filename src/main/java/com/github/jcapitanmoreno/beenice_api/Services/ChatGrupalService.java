@@ -25,7 +25,7 @@ public class ChatGrupalService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    // Enviar un mensaje al chat grupal
+
     public ChatGrupal sendMessage(Long grupoId, Long usuarioId, String mensaje) throws RecordNotFoundException {
         Optional<Grupo> grupoOptional = grupoRepository.findById(grupoId);
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
@@ -42,7 +42,7 @@ public class ChatGrupalService {
         }
     }
 
-    // Obtener todos los mensajes de un grupo
+
     public List<ChatGrupal> getMessagesByGrupoId(Long grupoId) throws RecordNotFoundException {
         Optional<Grupo> grupoOptional = grupoRepository.findById(grupoId);
         if (grupoOptional.isPresent()) {
@@ -55,7 +55,7 @@ public class ChatGrupalService {
     }
 
 
-    // Eliminar un mensaje del chat grupal
+
     public void deleteMessage(Long mensajeId) throws RecordNotFoundException {
         Optional<ChatGrupal> chatOptional = chatGrupalRepository.findById(mensajeId);
         if (chatOptional.isPresent()) {
