@@ -1,5 +1,7 @@
 package com.github.jcapitanmoreno.beenice_api.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -16,6 +18,7 @@ public class Gasto {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_grupo")
@@ -30,6 +33,7 @@ public class Gasto {
     @Column(name = "pendiente", precision = 10, scale = 2)
     private BigDecimal pendiente;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "idGasto")
     private Set<Pago> pagos = new LinkedHashSet<>();
 

@@ -1,5 +1,6 @@
 package com.github.jcapitanmoreno.beenice_api.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
@@ -31,6 +32,7 @@ public class Grupo {
     @Column(name = "descripcion_general")
     private String descripcionGeneral;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "idGrupo")
     private Set<ChatGrupal> chatGrupals = new LinkedHashSet<>();
 
@@ -40,7 +42,9 @@ public class Grupo {
     @OneToMany(mappedBy = "idGrupo")
     private Set<NotaGrupal> notaGrupals = new LinkedHashSet<>();
 
+    @JsonManagedReference
     @ManyToMany
+    @JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name = "id_grupo"), inverseJoinColumns = @JoinColumn(name = "id_usuario"))
     private Set<Usuario> usuarios = new LinkedHashSet<>();
 
     public Long getId() {
