@@ -2,7 +2,9 @@ package com.github.jcapitanmoreno.beenice_api.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -32,20 +34,31 @@ public class Grupo {
     @Column(name = "descripcion_general")
     private String descripcionGeneral;
 
-    @JsonManagedReference
+
     @OneToMany(mappedBy = "idGrupo")
     private Set<ChatGrupal> chatGrupals = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "idGrupo")
     private Set<Gasto> gastos = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "idGrupo")
-    private Set<NotaGrupal> notaGrupals = new LinkedHashSet<>();
 
-    @JsonManagedReference
     @ManyToMany
     @JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name = "id_grupo"), inverseJoinColumns = @JoinColumn(name = "id_usuario"))
     private Set<Usuario> usuarios = new LinkedHashSet<>();
+
+    @NotNull
+    @ColumnDefault("'Escribe aquí tu nota:'")
+    @Lob
+    @Column(name = "nota", nullable = false)
+    private String nota;
+
+    public String getNota() {
+        return nota;
+    }
+
+    public void setNota(String nota) {
+        this.nota = nota;
+    }
 
     public Long getId() {
         return id;
@@ -103,13 +116,7 @@ public class Grupo {
         this.gastos = gastos;
     }
 
-    public Set<NotaGrupal> getNotasGrupales() {
-        return notaGrupals;
-    }
 
-    public void setNotasGrupales(Set<NotaGrupal> notaGrupals) {
-        this.notaGrupals = notaGrupals;
-    }
 
     public Set<Usuario> getUsuarios() {
         return usuarios;

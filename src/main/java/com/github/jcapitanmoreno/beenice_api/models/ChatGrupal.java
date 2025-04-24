@@ -14,7 +14,7 @@ public class ChatGrupal {
     @Column(name = "id_mensaje", nullable = false)
     private Long id;
 
-    @JsonBackReference
+
     @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_grupo")
@@ -29,7 +29,7 @@ public class ChatGrupal {
     @Column(name = "fecha_envio", length = 50)
     private String fechaEnvio;
 
-    @JsonBackReference
+
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_usuario")
