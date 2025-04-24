@@ -1,5 +1,7 @@
 package com.github.jcapitanmoreno.beenice_api.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
@@ -26,9 +28,11 @@ public class Usuario {
     @Column(name = "contrasena", length = 100)
     private String contrasena;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "idUsuario")
     private Set<Pago> pagos = new LinkedHashSet<>();
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "usuarios")
     private Set<Grupo> grupos = new LinkedHashSet<>();
 

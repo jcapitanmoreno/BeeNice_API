@@ -19,6 +19,7 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @GetMapping
     public ResponseEntity<List<Usuario>> getAllUsuarios() {
         List<Usuario> usuarios = usuarioService.getAllUsuarios();
         return new ResponseEntity<>(usuarios, new HttpHeaders(), HttpStatus.OK);
@@ -47,8 +48,8 @@ public class UsuarioController {
         usuarioService.deleteUsuario(id);
         return HttpStatus.ACCEPTED;
     }
-    @GetMapping("/nombre")
-    public ResponseEntity<List<Usuario>> findUsuariosByNombre(@RequestParam String nombre) {
+    @GetMapping("/buscar/{nombre}")
+    public ResponseEntity<List<Usuario>> findUsuariosByNombre(@PathVariable String nombre) {
         List<Usuario> usuarios = usuarioService.findUsuariosByNombre(nombre);
         return new ResponseEntity<>(usuarios, new HttpHeaders(), HttpStatus.OK);
     }

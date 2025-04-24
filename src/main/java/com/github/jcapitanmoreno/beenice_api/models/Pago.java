@@ -1,5 +1,6 @@
 package com.github.jcapitanmoreno.beenice_api.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.OnDelete;
@@ -15,11 +16,13 @@ public class Pago {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_usuario")
     private Usuario idUsuario;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_gasto")
