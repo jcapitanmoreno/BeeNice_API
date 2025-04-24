@@ -11,14 +11,14 @@ public class UsuarioGrupo {
     @EmbeddedId
     private UsuarioGrupoId id;
 
-    @JsonBackReference
+
     @MapsId("idUsuario")
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario idUsuario;
 
-    @JsonBackReference
+
     @MapsId("idGrupo")
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

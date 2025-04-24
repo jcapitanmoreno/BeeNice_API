@@ -28,9 +28,13 @@ public class Usuario {
     @Column(name = "contrasena", length = 100)
     private String contrasena;
 
-    @JsonManagedReference
+
     @OneToMany(mappedBy = "idUsuario")
     private Set<Pago> pagos = new LinkedHashSet<>();
+
+
+    @OneToMany(mappedBy = "idUsuario")
+    private Set<ChatGrupal> chatGrupals = new LinkedHashSet<>();
 
     @JsonBackReference
     @ManyToMany(mappedBy = "usuarios")
@@ -84,4 +88,11 @@ public class Usuario {
         this.grupos = grupos;
     }
 
+    public Set<ChatGrupal> getChatGrupals() {
+        return chatGrupals;
+    }
+
+    public void setChatGrupals(Set<ChatGrupal> chatGrupals) {
+        this.chatGrupals = chatGrupals;
+    }
 }

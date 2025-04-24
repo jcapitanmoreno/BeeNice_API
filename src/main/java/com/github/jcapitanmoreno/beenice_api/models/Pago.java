@@ -16,13 +16,13 @@ public class Pago {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @JsonBackReference
+
     @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_usuario")
     private Usuario idUsuario;
 
-    @JsonBackReference
+
     @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_gasto")
