@@ -1,4 +1,4 @@
-package com.github.jcapitanmoreno.beenice_api.utils;
+package com.github.jcapitanmoreno.beenice_api.controllers;
 
 
 import org.springframework.context.annotation.Configuration;
