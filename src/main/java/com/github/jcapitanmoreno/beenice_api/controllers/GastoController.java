@@ -2,6 +2,7 @@ package com.github.jcapitanmoreno.beenice_api.controllers;
 
 import com.github.jcapitanmoreno.beenice_api.exceptions.RecordNotFoundException;
 import com.github.jcapitanmoreno.beenice_api.models.Gasto;
+import com.github.jcapitanmoreno.beenice_api.models.Usuario;
 import com.github.jcapitanmoreno.beenice_api.services.GastoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -17,6 +18,12 @@ public class GastoController {
 
     @Autowired
     private GastoService gastoService;
+
+    @GetMapping
+    public ResponseEntity<List<Gasto>> getAllGastos() {
+        List<Gasto> usuarios = gastoService.getAllGasto();
+        return new ResponseEntity<>(usuarios, new HttpHeaders(), HttpStatus.OK);
+    }
 
     @PostMapping("/{grupoId}")
     public ResponseEntity<Gasto> createGasto(@PathVariable Long grupoId, @RequestBody Gasto gasto) throws RecordNotFoundException {
