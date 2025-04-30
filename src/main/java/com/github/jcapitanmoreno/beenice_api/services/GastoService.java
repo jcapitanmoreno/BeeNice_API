@@ -3,12 +3,14 @@ package com.github.jcapitanmoreno.beenice_api.services;
 import com.github.jcapitanmoreno.beenice_api.exceptions.RecordNotFoundException;
 import com.github.jcapitanmoreno.beenice_api.models.Gasto;
 import com.github.jcapitanmoreno.beenice_api.models.Grupo;
+import com.github.jcapitanmoreno.beenice_api.models.Usuario;
 import com.github.jcapitanmoreno.beenice_api.repositories.GastoRespository;
 import com.github.jcapitanmoreno.beenice_api.repositories.GrupoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +22,15 @@ public class GastoService {
 
     @Autowired
     private GrupoRepository grupoRepository;
+
+    public List<Gasto> getAllGasto() {
+        List<Gasto> gastos = gastoRepository.findAll();
+        if (!gastos.isEmpty()) {
+            return gastos;
+        } else {
+            return new ArrayList<>();
+        }
+    }
 
 
     public Gasto createGasto(Long grupoId, Gasto gasto) throws RecordNotFoundException {
