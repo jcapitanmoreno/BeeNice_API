@@ -37,7 +37,6 @@ public class PagoService {
         // Asignar el usuario al pago
         Usuario usuario = usuarioOptional.get();
         pago.setIdUsuario(usuario);
-        pago.setNombreUsuario(usuario.getNombre());
 
         // Guardar el nuevo pago
         Pago nuevoPago = pagoRepository.save(pago);

@@ -30,9 +30,7 @@ public class Pago {
     @JoinColumn(name = "id_gasto")
     private Gasto idGasto;
 
-    @Size(max = 100)
-    @Column(name = "nombre_usuario", length = 100)
-    private String nombreUsuario;
+
 
     @Column(name = "total_a_pagar", precision = 10, scale = 2)
     private BigDecimal totalAPagar;
@@ -66,14 +64,6 @@ public class Pago {
 
     public void setIdGasto(Gasto idGasto) {
         this.idGasto = idGasto;
-    }
-
-    public String getNombreUsuario() {
-        return nombreUsuario;
-    }
-
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
     }
 
     public BigDecimal getTotalAPagar() {
