@@ -1,11 +1,13 @@
 package com.github.jcapitanmoreno.beenice_api.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+@JsonIgnoreProperties({"idGrupo", "idUsuario"})
 @Entity
 @Table(name = "mensaje")
 public class ChatGrupal {
