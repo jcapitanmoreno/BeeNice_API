@@ -1,5 +1,6 @@
 package com.github.jcapitanmoreno.beenice_api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.ColumnDefault;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+@JsonIgnoreProperties({"usuarios", "chatGrupals", "gastos"})
 @Entity
 @Table(name = "grupo")
 public class Grupo {

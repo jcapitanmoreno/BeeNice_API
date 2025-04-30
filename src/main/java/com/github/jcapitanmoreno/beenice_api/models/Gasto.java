@@ -1,6 +1,7 @@
 package com.github.jcapitanmoreno.beenice_api.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
@@ -10,6 +11,7 @@ import java.math.BigDecimal;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+@JsonIgnoreProperties({"idGrupo", "pagos"})
 @Entity
 @Table(name = "gasto")
 public class Gasto {
