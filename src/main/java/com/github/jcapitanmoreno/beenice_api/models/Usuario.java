@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -22,6 +23,7 @@ public class Usuario {
     @Column(name = "nombre", length = 100)
     private String nombre;
 
+    @UniqueElements
     @Size(max = 100)
     @Column(name = "correo_electronico", length = 100)
     private String correoElectronico;
