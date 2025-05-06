@@ -23,9 +23,8 @@ public class Usuario {
     @Column(name = "nombre", length = 100)
     private String nombre;
 
-    @UniqueElements
     @Size(max = 100)
-    @Column(name = "correo_electronico", length = 100)
+    @Column(name = "correo_electronico", length = 100, unique = true)
     private String correoElectronico;
 
     @Size(max = 100)
