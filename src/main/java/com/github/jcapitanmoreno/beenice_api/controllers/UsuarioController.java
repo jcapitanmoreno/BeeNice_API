@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 
@@ -56,9 +57,13 @@ public class UsuarioController {
     }
 
     @PostMapping("/validar")
-    public ResponseEntity<Boolean> validateUsuario(@RequestParam String correoElectronico, @RequestParam String contrasena) {
-        boolean isValid = usuarioService.validateUsuario(correoElectronico, contrasena);
-        return new ResponseEntity<>(isValid, new HttpHeaders(), HttpStatus.OK);
+    public ResponseEntity<Usuario> validateUsuario(@RequestParam String correoElectronico, @RequestParam String contrasena) {
+        Optional<Usuario> usuario = usuarioService.findUsuarioByCorreoElectronico(correoElectronico);
+        if (usuario.isPresent() && usuario.get().getContrasena().equals(contrasena)) {
+            return new ResponseEntity<>(usuario.get(), new HttpHeaders(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @PutMapping("/{id}/cambiar-contrasena")

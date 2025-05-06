@@ -43,8 +43,8 @@ public class UsuarioGrupoController {
         return new ResponseEntity<>(usuarios, new HttpHeaders(), HttpStatus.OK);
     }
 
-    @PostMapping("/{usuarioId}/join")
-    public ResponseEntity<Grupo> joinGrupoByCodigo(@PathVariable Long usuarioId, @RequestParam String codigoGrupo) throws RecordNotFoundException {
+    @PostMapping("/{usuarioId}/join/{codigoGrupo}")
+    public ResponseEntity<Grupo> joinGrupoByCodigo(@PathVariable Long usuarioId, @PathVariable String codigoGrupo) throws RecordNotFoundException {
         Grupo grupo = usuarioGrupoService.joinGrupoByCodigo(usuarioId, codigoGrupo);
         return new ResponseEntity<>(grupo, new HttpHeaders(), HttpStatus.OK);
     }
