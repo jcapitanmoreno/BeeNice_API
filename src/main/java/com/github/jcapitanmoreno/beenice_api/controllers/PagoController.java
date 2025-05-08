@@ -47,4 +47,9 @@ public class PagoController {
         pagoService.deletePago(pagoId);
         return HttpStatus.ACCEPTED;
     }
+    @GetMapping("/gasto/{gastoId}")
+    public ResponseEntity<List<Pago>> getPagosByGastoId(@PathVariable Long gastoId) throws RecordNotFoundException {
+        List<Pago> pagos = pagoService.getPagosByGastoId(gastoId);
+        return new ResponseEntity<>(pagos, new HttpHeaders(), HttpStatus.OK);
+    }
 }

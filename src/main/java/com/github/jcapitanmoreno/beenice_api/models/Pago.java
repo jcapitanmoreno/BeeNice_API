@@ -9,7 +9,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.math.BigDecimal;
 
-@JsonIgnoreProperties({"idUsuario", "idGasto"})
+//@JsonIgnoreProperties({"idUsuario", "idGasto"})
 @Entity
 @Table(name = "pago")
 public class Pago {
