@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -91,7 +92,19 @@ public class PagoService {
         }
     }
 
+    public List<Pago> getPagosByGastoId(Long gastoId) throws RecordNotFoundException {
+        Gasto gasto = gastoService.getGastoById(gastoId);
+        List<Pago> pagos = new ArrayList<>(gasto.getPagos());
 
+        pagos.forEach(pago -> {
+            Usuario usuario = usuarioRepository.findById(pago.getIdUsuario().getId()).orElse(null);
+            if (usuario != null) {
+                pago.getIdUsuario().setNombre(usuario.getNombre());
+            }
+        });
+
+        return pagos;
+    }
 
     private void actualizarGastoConPagos(Long gastoId) throws RecordNotFoundException {
         Gasto gasto = gastoService.getGastoById(gastoId);
@@ -108,5 +121,6 @@ public class PagoService {
         // Guardar los cambios en el gasto
         gastoService.updateGasto(gasto.getId(), gasto);
     }
+
 }
 

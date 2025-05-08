@@ -24,7 +24,7 @@ public class Grupo {
     @Column(name = "codigo_grupo", length = 50, unique = true)
     private String codigoGrupo;
 
-    @Size(max = 255)
+
     @Column(name = "imagen")
     private String imagen;
 
