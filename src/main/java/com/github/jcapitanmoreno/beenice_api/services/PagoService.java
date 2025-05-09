@@ -39,6 +39,11 @@ public class PagoService {
         Usuario usuario = usuarioOptional.get();
         pago.setIdUsuario(usuario);
 
+        // Validar y asignar el valor de pagadoHastaAhora
+        if (pago.getPagadoHastaAhora() == null) {
+            pago.setPagadoHastaAhora(BigDecimal.ZERO);
+        }
+
         // Guardar el nuevo pago
         Pago nuevoPago = pagoRepository.save(pago);
 
