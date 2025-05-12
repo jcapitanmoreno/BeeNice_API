@@ -61,15 +61,20 @@ public class GastoService {
         Optional<Gasto> gastoOptional = gastoRepository.findById(gastoId);
         if (gastoOptional.isPresent()) {
             Gasto gasto = gastoOptional.get();
-            gasto.setTotal(gastoDetails.getTotal());
-            gasto.setPagado(gastoDetails.getPagado());
-            gasto.setPendiente(gastoDetails.getTotal().subtract(gastoDetails.getPagado()));
+
+
+            BigDecimal total = gastoDetails.getTotal() != null ? gastoDetails.getTotal() : BigDecimal.ZERO;
+            BigDecimal pagado = gastoDetails.getPagado() != null ? gastoDetails.getPagado() : BigDecimal.ZERO;
+
+            gasto.setTotal(total);
+            gasto.setPagado(pagado);
+            gasto.setPendiente(total.subtract(pagado)); // Operación segura
+
             return gastoRepository.save(gasto);
         } else {
             throw new RecordNotFoundException("No se encontró el gasto con el ID proporcionado", gastoId);
         }
     }
-
 
     public void deleteGasto(Long gastoId) throws RecordNotFoundException {
         Optional<Gasto> gastoOptional = gastoRepository.findById(gastoId);

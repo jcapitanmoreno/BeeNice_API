@@ -111,6 +111,18 @@ public class PagoService {
         return pagos;
     }
 
+    public void deletePagosByGastoId(Long gastoId) throws RecordNotFoundException {
+        Gasto gasto = gastoService.getGastoById(gastoId);
+        List<Pago> pagos = new ArrayList<>(gasto.getPagos());
+
+        if (!pagos.isEmpty()) {
+            pagos.forEach(pago -> pagoRepository.deleteById(pago.getId()));
+            gasto.setPagado(BigDecimal.ZERO);
+            gasto.setPendiente(gasto.getTotal());
+            gastoService.updateGasto(gasto.getId(), gasto);
+        }
+    }
+
     private void actualizarGastoConPagos(Long gastoId) throws RecordNotFoundException {
         Gasto gasto = gastoService.getGastoById(gastoId);
 
