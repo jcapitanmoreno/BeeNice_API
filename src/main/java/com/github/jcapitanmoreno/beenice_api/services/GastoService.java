@@ -40,6 +40,7 @@ public class GastoService {
             gasto.setIdGrupo(grupo);
             gasto.setPagado(BigDecimal.ZERO);
             gasto.setPendiente(gasto.getTotal());
+            gasto.setDescripcion(gasto.getDescripcion());
             return gastoRepository.save(gasto);
         } else {
             throw new RecordNotFoundException("No se encontró el grupo con el ID proporcionado", grupoId);
@@ -68,7 +69,9 @@ public class GastoService {
 
             gasto.setTotal(total);
             gasto.setPagado(pagado);
-            gasto.setPendiente(total.subtract(pagado)); // Operación segura
+            gasto.setPendiente(total.subtract(pagado));
+            gasto.setDescripcion(gastoDetails.getDescripcion());
+
 
             return gastoRepository.save(gasto);
         } else {
