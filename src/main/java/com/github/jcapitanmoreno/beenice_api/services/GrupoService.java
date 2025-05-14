@@ -42,17 +42,19 @@ public class GrupoService {
     }
 
     public Grupo updateGrupo(Grupo grupo) throws RecordNotFoundException {
-        if (grupo.getId() == null) {
+        if (grupo.getId() != null) { // Verifica que el ID no sea null
             Optional<Grupo> grupoOptional = grupoRepository.findById(grupo.getId());
             if (grupoOptional.isPresent()) {
                 Grupo grupoExistente = grupoOptional.get();
                 grupoExistente.setDescripcionGeneral(grupo.getDescripcionGeneral());
+                grupoExistente.setNota(grupo.getNota());
+                grupoExistente.setImagen(grupo.getImagen());
                 return grupoRepository.save(grupoExistente);
             } else {
                 throw new RecordNotFoundException("No existe grupo para el id ", grupo.getId());
             }
         } else {
-            throw new RecordNotFoundException("No existe grupo para el id ", grupo.getId());
+            throw new RecordNotFoundException("El ID del grupo no puede ser null", null);
         }
     }
 
