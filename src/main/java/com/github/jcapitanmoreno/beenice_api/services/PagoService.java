@@ -28,16 +28,20 @@ public class PagoService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public Pago createPago(Long usuarioId, Pago pago) throws RecordNotFoundException {
+    public Pago createPago(Long usuarioId, Long gastoId, Pago pago) throws RecordNotFoundException {
         // Validar que el usuario existe
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
         if (usuarioOptional.isEmpty()) {
             throw new RecordNotFoundException("No se encontró el usuario con el ID proporcionado", usuarioId);
         }
 
-        // Asignar el usuario al pago
+        // Validar que el gasto existe
+        Gasto gasto = gastoService.getGastoById(gastoId);
+
+        // Asignar el usuario y el gasto al pago
         Usuario usuario = usuarioOptional.get();
         pago.setIdUsuario(usuario);
+        pago.setIdGasto(gasto);
 
         // Validar y asignar el valor de pagadoHastaAhora
         if (pago.getPagadoHastaAhora() == null) {
@@ -48,7 +52,7 @@ public class PagoService {
         Pago nuevoPago = pagoRepository.save(pago);
 
         // Actualizar el gasto asociado
-        actualizarGastoConPagos(pago.getIdGasto().getId());
+        actualizarGastoConPagos(gastoId);
 
         return nuevoPago;
     }
