@@ -18,12 +18,11 @@ public class PagoController {
     @Autowired
     private PagoService pagoService;
 
-    @PostMapping("/{usuarioId}")
-    public ResponseEntity<Pago> createPago(@PathVariable Long usuarioId, @RequestBody Pago pago) throws RecordNotFoundException {
-        Pago createdPago = pagoService.createPago(usuarioId, pago);
+    @PostMapping("/{usuarioId}/{gastoId}")
+    public ResponseEntity<Pago> createPago(@PathVariable Long usuarioId, @PathVariable Long gastoId, @RequestBody Pago pago) throws RecordNotFoundException {
+        Pago createdPago = pagoService.createPago(usuarioId, gastoId, pago);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPago);
     }
-
     @GetMapping
     public ResponseEntity<List<Pago>> getAllPagos() {
         List<Pago> pagos = pagoService.getAllPagos();
