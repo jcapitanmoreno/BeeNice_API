@@ -48,6 +48,12 @@ public class ChatGrupalService {
         if (grupoOptional.isPresent()) {
             return chatGrupalRepository.findAll().stream()
                     .filter(chat -> chat.getIdGrupo().getId().equals(grupoId))
+                    .peek(chat -> {
+                        Usuario usuario = usuarioRepository.findById(chat.getIdUsuario().getId()).orElse(null);
+                        if (usuario != null) {
+                            chat.getIdUsuario().setNombre(usuario.getNombre());
+                        }
+                    })
                     .toList();
         } else {
             throw new RecordNotFoundException("No se encontró el grupo con el ID proporcionado", grupoId);
