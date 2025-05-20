@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-@JsonIgnoreProperties({"idGrupo", "idUsuario"})
+@JsonIgnoreProperties({"idGrupo"})
 @Entity
 @Table(name = "mensaje")
 public class ChatGrupal {
@@ -32,7 +32,7 @@ public class ChatGrupal {
     private String fechaEnvio;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_usuario")
     private Usuario idUsuario;
