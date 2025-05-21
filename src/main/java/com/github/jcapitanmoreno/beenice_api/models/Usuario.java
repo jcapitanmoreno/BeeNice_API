@@ -31,6 +31,9 @@ public class Usuario {
     @Column(name = "contrasena", length = 100)
     private String contrasena;
 
+    @Lob
+    @Column(name = "imagen")
+    private String imagen;
 
     @OneToMany(mappedBy = "idUsuario")
     private Set<Pago> pagos = new LinkedHashSet<>();
@@ -42,6 +45,16 @@ public class Usuario {
     @JsonBackReference
     @ManyToMany(mappedBy = "usuarios")
     private Set<Grupo> grupos = new LinkedHashSet<>();
+
+
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 
     public Long getId() {
         return id;
