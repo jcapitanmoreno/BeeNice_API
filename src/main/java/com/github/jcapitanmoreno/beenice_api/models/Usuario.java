@@ -31,8 +31,8 @@ public class Usuario {
     @Column(name = "contrasena", length = 100)
     private String contrasena;
 
-    @Lob
-    @Column(name = "imagen")
+
+    @Column(name = "imagen", columnDefinition = "TEXT")
     private String imagen;
 
     @OneToMany(mappedBy = "idUsuario")

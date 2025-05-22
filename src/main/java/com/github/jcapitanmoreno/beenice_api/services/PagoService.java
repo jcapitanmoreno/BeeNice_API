@@ -142,6 +142,13 @@ public class PagoService {
         // Guardar los cambios en el gasto
         gastoService.updateGasto(gasto.getId(), gasto);
     }
-
+    public List<Pago> getPagosByUsuarioId(Long usuarioId) throws RecordNotFoundException {
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
+        if (usuarioOptional.isPresent()) {
+            return pagoRepository.findByIdUsuarioId(usuarioId);
+        } else {
+            throw new RecordNotFoundException("No se encontró el usuario con el ID proporcionado", usuarioId);
+        }
+    }
 }
 

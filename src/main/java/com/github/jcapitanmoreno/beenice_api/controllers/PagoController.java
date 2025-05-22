@@ -58,4 +58,10 @@ public class PagoController {
         List<Pago> pagos = pagoService.getPagosByGastoId(gastoId);
         return new ResponseEntity<>(pagos, new HttpHeaders(), HttpStatus.OK);
     }
+
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<List<Pago>> getPagosByUsuarioId(@PathVariable Long usuarioId) throws RecordNotFoundException {
+        List<Pago> pagos = pagoService.getPagosByUsuarioId(usuarioId);
+        return new ResponseEntity<>(pagos, new HttpHeaders(), HttpStatus.OK);
+    }
 }
