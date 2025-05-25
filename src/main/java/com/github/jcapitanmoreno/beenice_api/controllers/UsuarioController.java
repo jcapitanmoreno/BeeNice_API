@@ -1,5 +1,6 @@
 package com.github.jcapitanmoreno.beenice_api.controllers;
 
+import com.github.jcapitanmoreno.beenice_api.config.PasswordUtil;
 import com.github.jcapitanmoreno.beenice_api.services.UsuarioService;
 import com.github.jcapitanmoreno.beenice_api.exceptions.RecordNotFoundException;
 import com.github.jcapitanmoreno.beenice_api.models.Usuario;
@@ -59,7 +60,7 @@ public class UsuarioController {
     @PostMapping("/validar")
     public ResponseEntity<Usuario> validateUsuario(@RequestParam String correoElectronico, @RequestParam String contrasena) {
         Optional<Usuario> usuario = usuarioService.findUsuarioByCorreoElectronico(correoElectronico);
-        if (usuario.isPresent() && usuario.get().getContrasena().equals(contrasena)) {
+        if (usuario.isPresent() && PasswordUtil.checkPassword(contrasena, usuario.get().getContrasena())) {
             return new ResponseEntity<>(usuario.get(), new HttpHeaders(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.UNAUTHORIZED);

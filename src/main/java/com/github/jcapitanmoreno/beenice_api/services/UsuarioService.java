@@ -1,5 +1,6 @@
 package com.github.jcapitanmoreno.beenice_api.services;
 
+import com.github.jcapitanmoreno.beenice_api.config.PasswordUtil;
 import com.github.jcapitanmoreno.beenice_api.exceptions.RecordNotFoundException;
 import com.github.jcapitanmoreno.beenice_api.models.Usuario;
 import com.github.jcapitanmoreno.beenice_api.repositories.UsuarioRepository;
@@ -35,8 +36,8 @@ public class UsuarioService {
     }
 
     public Usuario createUsuario(Usuario usuario) {
-        usuario = usuarioRepository.save(usuario);
-        return usuario;
+        usuario.setContrasena(PasswordUtil.hashPassword(usuario.getContrasena()));
+        return usuarioRepository.save(usuario);
     }
 
     public Usuario updateUsuario(Usuario usuario) throws RecordNotFoundException {
@@ -46,7 +47,9 @@ public class UsuarioService {
                 Usuario usuarioExistente = usuarioOptional.get();
                 usuarioExistente.setNombre(usuario.getNombre());
                 usuarioExistente.setCorreoElectronico(usuario.getCorreoElectronico());
-                usuarioExistente.setContrasena(usuario.getContrasena());
+                if (usuario.getContrasena() != null) {
+                    usuarioExistente.setContrasena(PasswordUtil.hashPassword(usuario.getContrasena()));
+                }
                 return usuarioRepository.save(usuarioExistente);
             } else {
                 throw new RecordNotFoundException("No existe usuario para el id ", usuario.getId());
@@ -78,7 +81,7 @@ public class UsuarioService {
 
     public boolean validateUsuario(String correoElectronico, String contrasena) {
         Optional<Usuario> usuario = usuarioRepository.findByCorreoElectronico(correoElectronico);
-        return usuario.isPresent() && usuario.get().getContrasena().equals(contrasena);
+        return usuario.isPresent() && PasswordUtil.checkPassword(contrasena, usuario.get().getContrasena());
     }
 
 
@@ -86,7 +89,7 @@ public class UsuarioService {
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
         if (usuarioOptional.isPresent()) {
             Usuario usuario = usuarioOptional.get();
-            usuario.setContrasena(nuevaContrasena);
+            usuario.setContrasena(PasswordUtil.hashPassword(nuevaContrasena));
             return usuarioRepository.save(usuario);
         } else {
             throw new RecordNotFoundException("No existe usuario para el id ", id);
