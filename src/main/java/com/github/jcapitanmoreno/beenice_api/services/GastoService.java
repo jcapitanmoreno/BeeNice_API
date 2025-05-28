@@ -23,6 +23,10 @@ public class GastoService {
     @Autowired
     private GrupoRepository grupoRepository;
 
+    /**
+     * Obtiene todos los gastos registrados.
+     * @return Lista de objetos Gasto.
+     */
     public List<Gasto> getAllGasto() {
         List<Gasto> gastos = gastoRepository.findAll();
         if (!gastos.isEmpty()) {
@@ -32,7 +36,13 @@ public class GastoService {
         }
     }
 
-
+    /**
+     * Crea un nuevo gasto asociado a un grupo.
+     * @param grupoId ID del grupo al que se asociará el gasto.
+     * @param gasto Objeto Gasto con los detalles del gasto.
+     * @return El objeto Gasto creado y guardado.
+     * @throws RecordNotFoundException Si el grupo no existe.
+     */
     public Gasto createGasto(Long grupoId, Gasto gasto) throws RecordNotFoundException {
         Optional<Grupo> grupoOptional = grupoRepository.findById(grupoId);
         if (grupoOptional.isPresent()) {
@@ -47,7 +57,12 @@ public class GastoService {
         }
     }
 
-
+    /**
+     * Obtiene un gasto específico por su ID.
+     * @param gastoId ID del gasto que se desea obtener.
+     * @return El objeto Gasto correspondiente al ID proporcionado.
+     * @throws RecordNotFoundException Si el gasto no existe.
+     */
     public Gasto getGastoById(Long gastoId) throws RecordNotFoundException {
         Optional<Gasto> gastoOptional = gastoRepository.findById(gastoId);
         if (gastoOptional.isPresent()) {
@@ -57,7 +72,13 @@ public class GastoService {
         }
     }
 
-
+    /**
+     * Actualiza los detalles de un gasto específico.
+     * @param gastoId ID del gasto que se desea actualizar.
+     * @param gastoDetails Objeto Gasto con los nuevos detalles.
+     * @return El objeto Gasto actualizado.
+     * @throws RecordNotFoundException Si el gasto no existe.
+     */
     public Gasto updateGasto(Long gastoId, Gasto gastoDetails) throws RecordNotFoundException {
         Optional<Gasto> gastoOptional = gastoRepository.findById(gastoId);
         if (gastoOptional.isPresent()) {
@@ -79,6 +100,11 @@ public class GastoService {
         }
     }
 
+    /**
+     * Elimina un gasto específico por su ID.
+     * @param gastoId ID del gasto que se desea eliminar.
+     * @throws RecordNotFoundException Si el gasto no existe.
+     */
     public void deleteGasto(Long gastoId) throws RecordNotFoundException {
         Optional<Gasto> gastoOptional = gastoRepository.findById(gastoId);
         if (gastoOptional.isPresent()) {
@@ -88,7 +114,12 @@ public class GastoService {
         }
     }
 
-
+    /**
+     * Obtiene todos los gastos asociados a un grupo específico.
+     * @param grupoId ID del grupo del cual se quieren obtener los gastos.
+     * @return Lista de objetos Gasto pertenecientes al grupo.
+     * @throws RecordNotFoundException Si el grupo no existe.
+     */
     public List<Gasto> getGastosByGrupoId(Long grupoId) throws RecordNotFoundException {
         Optional<Grupo> grupoOptional = grupoRepository.findById(grupoId);
         if (grupoOptional.isPresent()) {

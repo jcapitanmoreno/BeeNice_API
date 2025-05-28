@@ -20,6 +20,12 @@ public class PdfController {
     @Autowired
     private PdfService pdfService;
 
+    /**
+     * Exporta los datos de un usuario específico en formato PDF.
+     * @param usuarioId ID del usuario cuyos datos se desean exportar.
+     * @return Archivo PDF con los datos del usuario.
+     * @throws Exception Si ocurre un error durante la generación del PDF.
+     */
     @GetMapping("/usuario/{usuarioId}")
     public ResponseEntity<byte[]> exportUsuarioPdf(@PathVariable Long usuarioId) {
         try {

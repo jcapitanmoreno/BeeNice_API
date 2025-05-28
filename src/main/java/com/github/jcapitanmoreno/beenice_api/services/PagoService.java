@@ -28,6 +28,14 @@ public class PagoService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    /**
+     * Crea un nuevo pago asociado a un usuario y un gasto.
+     * @param usuarioId ID del usuario que realiza el pago.
+     * @param gastoId ID del gasto al que se asocia el pago.
+     * @param pago Objeto Pago con los detalles del pago.
+     * @return El objeto Pago creado y guardado.
+     * @throws RecordNotFoundException Si el usuario o el gasto no existen.
+     */
     public Pago createPago(Long usuarioId, Long gastoId, Pago pago) throws RecordNotFoundException {
         // Validar que el usuario existe
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
@@ -57,10 +65,20 @@ public class PagoService {
         return nuevoPago;
     }
 
+    /**
+     * Obtiene todos los pagos registrados.
+     * @return Lista de objetos Pago.
+     */
     public List<Pago> getAllPagos() {
         return pagoRepository.findAll();
     }
 
+    /**
+     * Obtiene un pago específico por su ID.
+     * @param pagoId ID del pago que se desea obtener.
+     * @return El objeto Pago correspondiente al ID proporcionado.
+     * @throws RecordNotFoundException Si el pago no existe.
+     */
     public Pago getPagoById(Long pagoId) throws RecordNotFoundException {
         Optional<Pago> pagoOptional = pagoRepository.findById(pagoId);
         if (pagoOptional.isPresent()) {
@@ -70,6 +88,13 @@ public class PagoService {
         }
     }
 
+    /**
+     * Actualiza los detalles de un pago específico.
+     * @param pagoId ID del pago que se desea actualizar.
+     * @param pagoDetails Objeto Pago con los nuevos detalles.
+     * @return El objeto Pago actualizado.
+     * @throws RecordNotFoundException Si el pago no existe.
+     */
     public Pago updatePago(Long pagoId, Pago pagoDetails) throws RecordNotFoundException {
         Optional<Pago> pagoOptional = pagoRepository.findById(pagoId);
         if (pagoOptional.isPresent()) {
@@ -87,7 +112,11 @@ public class PagoService {
             throw new RecordNotFoundException("No se encontró el pago con el ID proporcionado", pagoId);
         }
     }
-
+    /**
+     * Elimina un pago específico por su ID.
+     * @param pagoId ID del pago que se desea eliminar.
+     * @throws RecordNotFoundException Si el pago no existe.
+     */
     public void deletePago(Long pagoId) throws RecordNotFoundException {
         Optional<Pago> pagoOptional = pagoRepository.findById(pagoId);
         if (pagoOptional.isPresent()) {
@@ -101,6 +130,12 @@ public class PagoService {
         }
     }
 
+    /**
+     * Obtiene todos los pagos asociados a un gasto específico.
+     * @param gastoId ID del gasto del cual se quieren obtener los pagos.
+     * @return Lista de objetos Pago pertenecientes al gasto.
+     * @throws RecordNotFoundException Si el gasto no existe.
+     */
     public List<Pago> getPagosByGastoId(Long gastoId) throws RecordNotFoundException {
         Gasto gasto = gastoService.getGastoById(gastoId);
         List<Pago> pagos = new ArrayList<>(gasto.getPagos());
@@ -114,7 +149,11 @@ public class PagoService {
 
         return pagos;
     }
-
+    /**
+     * Elimina todos los pagos asociados a un gasto específico.
+     * @param gastoId ID del gasto del cual se quieren eliminar los pagos.
+     * @throws RecordNotFoundException Si el gasto no existe.
+     */
     public void deletePagosByGastoId(Long gastoId) throws RecordNotFoundException {
         Gasto gasto = gastoService.getGastoById(gastoId);
         List<Pago> pagos = new ArrayList<>(gasto.getPagos());
@@ -127,6 +166,12 @@ public class PagoService {
         }
     }
 
+    /**
+     * Actualiza los valores de "pagado" y "pendiente" de un gasto específico
+     * basado en los pagos asociados.
+     * @param gastoId ID del gasto que se desea actualizar.
+     * @throws RecordNotFoundException Si el gasto no existe.
+     */
     private void actualizarGastoConPagos(Long gastoId) throws RecordNotFoundException {
         Gasto gasto = gastoService.getGastoById(gastoId);
 
@@ -142,6 +187,13 @@ public class PagoService {
         // Guardar los cambios en el gasto
         gastoService.updateGasto(gasto.getId(), gasto);
     }
+
+    /**
+     * Obtiene todos los pagos realizados por un usuario específico.
+     * @param usuarioId ID del usuario del cual se quieren obtener los pagos.
+     * @return Lista de objetos Pago realizados por el usuario.
+     * @throws RecordNotFoundException Si el usuario no existe.
+     */
     public List<Pago> getPagosByUsuarioId(Long usuarioId) throws RecordNotFoundException {
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
         if (usuarioOptional.isPresent()) {

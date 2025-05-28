@@ -20,7 +20,13 @@ public class UsuarioGrupoService {
     @Autowired
     private GrupoRepository grupoRepository;
 
-
+    /**
+     * Agrega un usuario a un grupo específico.
+     * @param usuarioId ID del usuario que se desea agregar al grupo.
+     * @param grupoId ID del grupo al que se desea agregar el usuario.
+     * @return El objeto Grupo actualizado con el usuario agregado.
+     * @throws RecordNotFoundException Si el usuario o el grupo no existen.
+     */
     public Grupo addUsuarioToGrupo(Long usuarioId, Long grupoId) throws RecordNotFoundException {
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
         Optional<Grupo> grupoOptional = grupoRepository.findById(grupoId);
@@ -41,7 +47,13 @@ public class UsuarioGrupoService {
         }
     }
 
-
+    /**
+     * Elimina un usuario de un grupo específico.
+     * @param usuarioId ID del usuario que se desea eliminar del grupo.
+     * @param grupoId ID del grupo del que se desea eliminar el usuario.
+     * @return El objeto Grupo actualizado con el usuario eliminado.
+     * @throws RecordNotFoundException Si el usuario o el grupo no existen.
+     */
     public Grupo removeUsuarioFromGrupo(Long usuarioId, Long grupoId) throws RecordNotFoundException {
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
         Optional<Grupo> grupoOptional = grupoRepository.findById(grupoId);
@@ -62,7 +74,12 @@ public class UsuarioGrupoService {
         }
     }
 
-
+    /**
+     * Obtiene todos los grupos asociados a un usuario específico.
+     * @param usuarioId ID del usuario del cual se quieren obtener los grupos.
+     * @return Conjunto de objetos Grupo asociados al usuario.
+     * @throws RecordNotFoundException Si el usuario no existe.
+     */
     public Set<Grupo> getGruposByUsuarioId(Long usuarioId) throws RecordNotFoundException {
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
         if (usuarioOptional.isPresent()) {
@@ -72,7 +89,12 @@ public class UsuarioGrupoService {
         }
     }
 
-
+    /**
+     * Obtiene todos los usuarios asociados a un grupo específico.
+     * @param grupoId ID del grupo del cual se quieren obtener los usuarios.
+     * @return Conjunto de objetos Usuario asociados al grupo.
+     * @throws RecordNotFoundException Si el grupo no existe.
+     */
     public Set<Usuario> getUsuariosByGrupoId(Long grupoId) throws RecordNotFoundException {
         Optional<Grupo> grupoOptional = grupoRepository.findById(grupoId);
         if (grupoOptional.isPresent()) {
@@ -81,7 +103,13 @@ public class UsuarioGrupoService {
             throw new RecordNotFoundException("Grupo no encontrado", grupoId);
         }
     }
-
+    /**
+     * Permite a un usuario unirse a un grupo utilizando su código único.
+     * @param usuarioId ID del usuario que se desea unir al grupo.
+     * @param codigoGrupo Código único del grupo al que se desea unir el usuario.
+     * @return El objeto Grupo actualizado con el usuario agregado.
+     * @throws RecordNotFoundException Si el usuario o el grupo no existen.
+     */
     public Grupo joinGrupoByCodigo(Long usuarioId, String codigoGrupo) throws RecordNotFoundException {
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
         Optional<Grupo> grupoOptional = grupoRepository.findByCodigoGrupo(codigoGrupo);

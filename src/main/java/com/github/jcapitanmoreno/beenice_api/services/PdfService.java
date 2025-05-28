@@ -11,6 +11,13 @@ import java.util.List;
 @Service
 public class PdfService {
 
+    /**
+     * Genera un archivo PDF con información de usuarios y sus datos asociados.
+     * @param usuarioData Lista de arreglos de objetos que contienen los datos de los usuarios.
+     *                    Cada arreglo incluye información como nombre, grupo, notas, gastos y pagos.
+     * @return Un arreglo de bytes que representa el contenido del PDF generado.
+     * @throws DocumentException Si ocurre un error al crear el documento PDF.
+     */
     public byte[] generateUsuarioPdf(List<Object[]> usuarioData) throws DocumentException {
         Document document = new Document();
         ByteArrayOutputStream out = new ByteArrayOutputStream();

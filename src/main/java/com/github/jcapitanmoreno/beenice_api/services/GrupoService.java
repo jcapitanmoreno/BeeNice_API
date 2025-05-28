@@ -17,12 +17,22 @@ public class GrupoService {
     @Autowired
     private GrupoRepository grupoRepository;
 
-
+    /**
+     * Crea un nuevo grupo con un código único.
+     * @param grupo Objeto Grupo con los detalles del grupo.
+     * @return El objeto Grupo creado y guardado.
+     */
     public Grupo createGrupo(Grupo grupo) {
         grupo.setCodigoGrupo(UUID.randomUUID().toString().substring(0, 4));
         return grupoRepository.save(grupo);
     }
 
+    /**
+     * Obtiene un grupo por su código único.
+     * @param codigoGrupo Código único del grupo.
+     * @return El objeto Grupo correspondiente al código proporcionado.
+     * @throws RecordNotFoundException Si el grupo no existe.
+     */
     public Grupo getGrupoByCodigo(String codigoGrupo) throws RecordNotFoundException {
         Optional<Grupo> grupoOptional = grupoRepository.findByCodigoGrupo(codigoGrupo);
         if (grupoOptional.isPresent()) {
@@ -32,6 +42,12 @@ public class GrupoService {
         }
     }
 
+    /**
+     * Obtiene un grupo por su ID.
+     * @param grupoId ID del grupo que se desea obtener.
+     * @return El objeto Grupo correspondiente al ID proporcionado.
+     * @throws RecordNotFoundException Si el grupo no existe.
+     */
     public Grupo getGrupoById(Long grupoId) throws RecordNotFoundException {
         Optional<Grupo> grupoOptional = grupoRepository.findById(grupoId);
         if (grupoOptional.isPresent()) {
@@ -41,6 +57,12 @@ public class GrupoService {
         }
     }
 
+    /**
+     * Actualiza los detalles de un grupo específico.
+     * @param grupo Objeto Grupo con los nuevos detalles.
+     * @return El objeto Grupo actualizado.
+     * @throws RecordNotFoundException Si el grupo no existe.
+     */
     public Grupo updateGrupo(Grupo grupo) throws RecordNotFoundException {
         if (grupo.getId() != null) { // Verifica que el ID no sea null
             Optional<Grupo> grupoOptional = grupoRepository.findById(grupo.getId());
@@ -58,6 +80,11 @@ public class GrupoService {
         }
     }
 
+    /**
+     * Elimina un grupo específico por su ID.
+     * @param grupoId ID del grupo que se desea eliminar.
+     * @throws RecordNotFoundException Si el grupo no existe.
+     */
     public void deleteGrupo(Long grupoId) throws RecordNotFoundException {
         Optional<Grupo> grupoOptional = grupoRepository.findById(grupoId);
         if (grupoOptional.isPresent()) {
@@ -67,10 +94,21 @@ public class GrupoService {
         }
     }
 
+    /**
+     * Obtiene todos los grupos registrados.
+     * @return Lista de objetos Grupo.
+     */
     public List<Grupo> getAllGrupos() {
         return grupoRepository.findAll();
     }
 
+    /**
+     * Asigna un creador a un grupo específico.
+     * @param grupoId ID del grupo al que se asignará el creador.
+     * @param creador Objeto Usuario que será asignado como creador.
+     * @return El objeto Grupo actualizado con el creador asignado.
+     * @throws RecordNotFoundException Si el grupo no existe.
+     */
     public Grupo assignarCreadorToGrupo(Long grupoId, Usuario creador) throws RecordNotFoundException {
         Optional<Grupo> grupoOptional = grupoRepository.findById(grupoId);
         if (grupoOptional.isPresent()) {
@@ -82,6 +120,12 @@ public class GrupoService {
         }
     }
 
+    /**
+     * Obtiene el código único de un grupo por su ID.
+     * @param grupoId ID del grupo.
+     * @return Código único del grupo.
+     * @throws RecordNotFoundException Si el grupo no existe.
+     */
     public String getCodigoGrupoById(Long grupoId) throws RecordNotFoundException {
         Optional<Grupo> grupoOptional = grupoRepository.findById(grupoId);
         if (grupoOptional.isPresent()) {

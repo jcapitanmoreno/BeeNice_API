@@ -13,6 +13,13 @@ public class EmailController {
     @Autowired
     private JavaMailSender mailSender;
 
+    /**
+     * Envía un correo electrónico con los detalles proporcionados.
+     * @param nombre Nombre del remitente.
+     * @param correo Correo electrónico del remitente.
+     * @param mensaje Contenido del mensaje.
+     * @return Respuesta indicando el estado del envío del correo.
+     */
     @PostMapping("/send")
     public ResponseEntity<String> sendEmail(@RequestParam String nombre, @RequestParam String correo, @RequestParam String mensaje) {
         try {
