@@ -17,6 +17,10 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    /**
+     * Obtiene todos los usuarios registrados.
+     * @return Lista de objetos Usuario. Si no hay usuarios, devuelve una lista vacía.
+     */
     public List<Usuario> getAllUsuarios() {
         List<Usuario> usuarios = usuarioRepository.findAll();
         if (!usuarios.isEmpty()) {
@@ -26,6 +30,12 @@ public class UsuarioService {
         }
     }
 
+    /**
+     * Obtiene un usuario por su ID.
+     * @param id ID del usuario que se desea obtener.
+     * @return El objeto Usuario correspondiente al ID proporcionado.
+     * @throws RecordNotFoundException Si el usuario no existe.
+     */
     public Usuario getUsuarioById(Long id) throws RecordNotFoundException {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         if (usuario.isPresent()) {
@@ -35,11 +45,22 @@ public class UsuarioService {
         }
     }
 
+    /**
+     * Crea un nuevo usuario con su contraseña encriptada.
+     * @param usuario Objeto Usuario con los detalles del usuario.
+     * @return El objeto Usuario creado y guardado.
+     */
     public Usuario createUsuario(Usuario usuario) {
         usuario.setContrasena(PasswordUtil.hashPassword(usuario.getContrasena()));
         return usuarioRepository.save(usuario);
     }
 
+    /**
+     * Actualiza los detalles de un usuario existente.
+     * @param usuario Objeto Usuario con los nuevos detalles.
+     * @return El objeto Usuario actualizado.
+     * @throws RecordNotFoundException Si el usuario no existe.
+     */
     public Usuario updateUsuario(Usuario usuario) throws RecordNotFoundException {
         if (usuario.getId() == null) {
             Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuario.getId());
@@ -59,6 +80,11 @@ public class UsuarioService {
         }
     }
 
+    /**
+     * Elimina un usuario por su ID.
+     * @param id ID del usuario que se desea eliminar.
+     * @throws RecordNotFoundException Si el usuario no existe.
+     */
     public void deleteUsuario(Long id) throws RecordNotFoundException {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         if (usuario.isPresent()) {
@@ -68,23 +94,42 @@ public class UsuarioService {
         }
     }
 
-
+    /**
+     * Busca usuarios por su nombre, ignorando mayúsculas y minúsculas.
+     * @param nombre Nombre o parte del nombre del usuario que se desea buscar.
+     * @return Lista de objetos Usuario que coinciden con el nombre proporcionado.
+     */
     public List<Usuario> findUsuariosByNombre(String nombre) {
         return usuarioRepository.findByNombreContainingIgnoreCase(nombre);
     }
 
-
+    /**
+     * Busca un usuario por su correo electrónico.
+     * @param correoElectronico Correo electrónico del usuario que se desea buscar.
+     * @return Un objeto Optional que contiene el Usuario si se encuentra.
+     */
     public Optional<Usuario> findUsuarioByCorreoElectronico(String correoElectronico) {
         return usuarioRepository.findByCorreoElectronico(correoElectronico);
     }
 
-
+    /**
+     * Valida las credenciales de un usuario.
+     * @param correoElectronico Correo electrónico del usuario.
+     * @param contrasena Contraseña del usuario.
+     * @return true si las credenciales son válidas, false en caso contrario.
+     */
     public boolean validateUsuario(String correoElectronico, String contrasena) {
         Optional<Usuario> usuario = usuarioRepository.findByCorreoElectronico(correoElectronico);
         return usuario.isPresent() && PasswordUtil.checkPassword(contrasena, usuario.get().getContrasena());
     }
 
-
+    /**
+     * Cambia la contraseña de un usuario.
+     * @param id ID del usuario cuya contraseña se desea cambiar.
+     * @param nuevaContrasena Nueva contraseña que se asignará al usuario.
+     * @return El objeto Usuario actualizado con la nueva contraseña.
+     * @throws RecordNotFoundException Si el usuario no existe.
+     */
     public Usuario changePassword(Long id, String nuevaContrasena) throws RecordNotFoundException {
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
         if (usuarioOptional.isPresent()) {
