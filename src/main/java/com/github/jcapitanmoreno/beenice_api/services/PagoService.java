@@ -175,16 +175,16 @@ public class PagoService {
     private void actualizarGastoConPagos(Long gastoId) throws RecordNotFoundException {
         Gasto gasto = gastoService.getGastoById(gastoId);
 
-        // Calcular el total pagado sumando los valores de "pagadoHastaAhora" de los pagos asociados
+
         BigDecimal totalPagado = gasto.getPagos().stream()
                 .map(pago -> pago.getPagadoHastaAhora() != null ? pago.getPagadoHastaAhora() : BigDecimal.ZERO)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        // Actualizar los valores de "pagado" y "pendiente" en el gasto
+
         gasto.setPagado(totalPagado);
         gasto.setPendiente(gasto.getTotal().subtract(totalPagado));
 
-        // Guardar los cambios en el gasto
+
         gastoService.updateGasto(gasto.getId(), gasto);
     }
 
